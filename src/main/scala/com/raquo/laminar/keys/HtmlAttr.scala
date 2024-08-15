@@ -2,7 +2,7 @@ package com.raquo.laminar.keys
 
 import com.raquo.airstream.core.Source
 import com.raquo.laminar.DomApi
-import com.raquo.laminar.api.L.{HtmlElement, optionToSetter}
+import com.raquo.laminar.api.L.{HtmlElement, seqToSetter}
 import com.raquo.laminar.codecs.Codec
 import com.raquo.laminar.modifiers.KeySetter.HtmlAttrSetter
 import com.raquo.laminar.modifiers.KeyUpdater.HtmlAttrUpdater
@@ -23,7 +23,7 @@ class HtmlAttr[V](
   }
 
   def maybe(value: Option[V]): Setter[HtmlElement] = {
-    optionToSetter(value.map(v => this := v))
+    seqToSetter[Option, HtmlElement](value.map(v => this := v))
   }
 
   def :=(value: V): HtmlAttrSetter[V] = {

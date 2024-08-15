@@ -2,7 +2,7 @@ package com.raquo.laminar.keys
 
 import com.raquo.airstream.core.Source
 import com.raquo.laminar.DomApi
-import com.raquo.laminar.api.L.{HtmlElement, optionToSetter}
+import com.raquo.laminar.api.L.{HtmlElement, seqToSetter}
 import com.raquo.laminar.codecs.Codec
 import com.raquo.laminar.modifiers.KeySetter.PropSetter
 import com.raquo.laminar.modifiers.KeyUpdater.PropUpdater
@@ -31,7 +31,7 @@ class HtmlProp[V, DomV](
   }
 
   def maybe(value: Option[V]): Setter[HtmlElement] = {
-    optionToSetter(value.map(this := _))
+    seqToSetter[Option, HtmlElement](value.map(this := _))
   }
 
   def <--(values: Source[V]): PropUpdater[V, DomV] = {

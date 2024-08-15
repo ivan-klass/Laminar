@@ -2,7 +2,7 @@ package com.raquo.laminar.keys
 
 import com.raquo.airstream.core.Source
 import com.raquo.laminar.DomApi
-import com.raquo.laminar.api.L.{SvgElement, optionToSetter}
+import com.raquo.laminar.api.L.{SvgElement, seqToSetter}
 import com.raquo.laminar.codecs.Codec
 import com.raquo.laminar.modifiers.KeySetter.SvgAttrSetter
 import com.raquo.laminar.modifiers.KeyUpdater.SvgAttrUpdater
@@ -36,7 +36,7 @@ class SvgAttr[V](
   }
 
   def maybe(value: Option[V]): Setter[SvgElement] = {
-    optionToSetter(value.map(v => this := v))
+    seqToSetter[Option, SvgElement](value.map(v => this := v))
   }
 
   def <--(values: Source[V]): SvgAttrUpdater[V] = {

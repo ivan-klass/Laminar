@@ -2,7 +2,7 @@ package com.raquo.laminar.keys
 
 import com.raquo.airstream.core.Source
 import com.raquo.laminar.DomApi
-import com.raquo.laminar.api.L.{HtmlElement, optionToSetter}
+import com.raquo.laminar.api.L.{HtmlElement, seqToSetter}
 import com.raquo.laminar.defs.styles.traits.GlobalKeywords
 import com.raquo.laminar.modifiers.KeySetter.StyleSetter
 import com.raquo.laminar.modifiers.KeyUpdater.StyleUpdater
@@ -25,7 +25,7 @@ class StyleProp[V](
   }
 
   def maybe(value: Option[V | String]): Setter[HtmlElement] = {
-    optionToSetter(value.map(v => this := v))
+    seqToSetter[Option, HtmlElement](value.map(v => this := v))
   }
 
   /** Source[V] and Source[String] are of course also accepted. */
