@@ -6,6 +6,7 @@ import com.raquo.laminar.api.StyleUnitsApi.StyleEncoder
 import com.raquo.laminar.inserters._
 import com.raquo.laminar.keys.CompositeKey.CompositeValueMappers
 import com.raquo.laminar.keys._
+import com.raquo.laminar.modifiers.KeyUpdater.StyleUpdater
 import com.raquo.laminar.modifiers._
 import com.raquo.laminar.nodes._
 import org.scalajs.dom
@@ -30,6 +31,11 @@ trait Implicits extends Implicits.LowPriorityImplicits with CompositeValueMapper
   @inline implicit def styleEncoderIntToDouble(encoder: StyleEncoder[Int]): StyleEncoder[Double] = {
     // Safe because Int-s and Double-s have identical runtime representation in Scala.js
     encoder.asInstanceOf[StyleEncoder[Double]]
+  }
+
+  // #TODO[Scala2] This is only needed in Scala 2, for type inference
+  implicit class RichStyleProp1[V](val prop: StyleProp[V]) {
+    def <--(values: Source[V]): StyleUpdater[V] = prop <-- values
   }
 
 
@@ -161,6 +167,13 @@ object Implicits {
     * #TODO Simplify this! See the other #TODO comment above about moving stuff out of LowPriorityImplicits.
     */
   trait LowPriorityImplicits {
+
+    // -- CSS Styles --
+
+    // #TODO[Scala2] This is only needed in Scala 2, for type inference
+    implicit class RichStyleProp2[V](val prop: StyleProp[V]) {
+      def <--(values: Source[String]): StyleUpdater[V] = prop <-- values
+    }
 
     // -- Methods to convert individual values / nodes / components to inserters --
 
