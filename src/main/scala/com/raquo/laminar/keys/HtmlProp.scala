@@ -18,6 +18,7 @@ import com.raquo.laminar.modifiers.{KeySetter, KeyUpdater, Modifier, Setter}
   */
 class HtmlProp[V, DomV](
   override val name: String,
+  val reflectedAttrName: Option[String],
   val codec: Codec[V, DomV]
 ) extends Key { self =>
 
